@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaCheckCircle, FaEdit, FaTrash } from "react-icons/fa";
 
 const initialTodoList = [
   { id: 1, description: "Learn coding", completed: false },
@@ -39,6 +40,9 @@ export default function App() {
           checked={item.completed}
           onChange={() => handleChange(item.id)}
         />
+        <FaEdit />
+        <FaTrash />
+        <FaCheckCircle />
       </div>
     ));
   }
