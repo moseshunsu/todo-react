@@ -23,9 +23,17 @@ export default function App() {
     setItems((items) => [...items, item]);
   }
 
+  function handleDeleteItem(id) {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
   return (
     <div>
-      <TodoList items={items} onToggleItem={handleToggleItem} />
+      <TodoList
+        items={items}
+        onToggleItem={handleToggleItem}
+        onDeleteItem={handleDeleteItem}
+      />
 
       <TodoItem />
 

@@ -1,6 +1,6 @@
 import { FaCheckCircle, FaEdit, FaTrash } from "react-icons/fa";
 
-export default function TodoList({ items, onToggleItem }) {
+export default function TodoList({ items, onToggleItem, onDeleteItem }) {
   return items.map((item) => (
     <div key={item.id}>
       <span>{item.description}</span>
@@ -12,7 +12,7 @@ export default function TodoList({ items, onToggleItem }) {
         onChange={() => onToggleItem(item.id)}
       />
       <FaEdit />
-      <FaTrash />
+      <FaTrash onClick={() => onDeleteItem(item.id)} />
       <FaCheckCircle />
     </div>
   ));
