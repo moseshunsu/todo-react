@@ -31,5 +31,39 @@ export default function App() {
 
   function TodoItem() {}
 
-  function AddTodoForm() {}
+  function AddTodoForm() {
+    const [description, setDescription] = useState("");
+
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      if (!description) return;
+
+      const id = crypto.randomUUID();
+
+      const newItem = {
+        id,
+        description: description,
+        completed: false,
+      };
+
+      setItems((items) => [...items, newItem]);
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <button>Add</button>
+      </form>
+    );
+  }
 }
