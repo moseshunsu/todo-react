@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 
 export default function AddTodoForm({ onSetItems }) {
   const [description, setDescription] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) inputRef.current.focus();
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +40,7 @@ export default function AddTodoForm({ onSetItems }) {
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          ref={inputRef}
         />
       </div>
       <button>Add</button>
