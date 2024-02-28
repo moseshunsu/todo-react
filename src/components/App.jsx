@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AddTodoForm from "./AddTodoForm";
 import TodoList from "./TodoList";
 
 const initialTodoList = [
@@ -9,9 +10,8 @@ const initialTodoList = [
 
 export default function App() {
   const [items, setItems] = useState(initialTodoList);
-  // const [isCompleted, setIsCompleted] = useState(false);
 
-  function handleAddItem(id) {
+  function handleToggleItem(id) {
     setItems(
       items.map((item) =>
         item.id === id ? { ...item, completed: !item.completed } : item
@@ -19,51 +19,19 @@ export default function App() {
     );
   }
 
+  function handleAddItem(item) {
+    setItems((items) => [...items, item]);
+  }
+
   return (
     <div>
-      <TodoList items={items} onToggleItem={handleAddItem} />
+      <TodoList items={items} onToggleItem={handleToggleItem} />
 
       <TodoItem />
 
-      <AddTodoForm />
+      <AddTodoForm onSetItems={handleAddItem} />
     </div>
   );
 
   function TodoItem() {}
-
-  function AddTodoForm() {
-    const [description, setDescription] = useState("");
-
-    function handleSubmit(e) {
-      e.preventDefault();
-
-      if (!description) return;
-
-      const id = crypto.randomUUID();
-
-      const newItem = {
-        id,
-        description: description,
-        completed: false,
-      };
-
-      setItems((items) => [...items, newItem]);
-    }
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="description">Description</label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <button>Add</button>
-      </form>
-    );
-  }
 }
