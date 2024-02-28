@@ -1,9 +1,22 @@
+import { useState } from "react";
+
+const initialTodoList = [
+  { id: 1, description: "Learn coding", completed: false },
+  { id: 2, description: "Eat Rice", completed: true },
+  { id: 3, description: "Drink water", completed: false },
+];
+
 export default function App() {
-  const initialTodoList = [
-    { id: 1, description: "Learn coding", completed: false },
-    { id: 2, description: "Eat Rice", completed: true },
-    { id: 1, description: "Drink water", completed: false },
-  ];
+  const [items, setItems] = useState(initialTodoList);
+  // const [isCompleted, setIsCompleted] = useState(false);
+
+  function handleChange(id) {
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  }
 
   return (
     <div>
@@ -15,7 +28,20 @@ export default function App() {
     </div>
   );
 
-  function TodoList() {}
+  function TodoList() {
+    return items.map((item) => (
+      <div key={item.id}>
+        <span>{item.description}</span>
+        <input
+          type="checkbox"
+          name="comleted"
+          id={item.id}
+          checked={item.completed}
+          onChange={() => handleChange(item.id)}
+        />
+      </div>
+    ));
+  }
 
   function TodoItem() {}
 
