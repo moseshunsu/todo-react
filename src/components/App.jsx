@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoList from "./TodoList";
+import Button from "./Button";
 
 const initialTodoList = [
   { id: 1, description: "Learn coding", completed: false },
@@ -10,6 +11,7 @@ const initialTodoList = [
 
 export default function App() {
   const [items, setItems] = useState(initialTodoList);
+  const [showForm, setShowForm] = useState(false);
 
   function handleToggleItem(id) {
     setItems(
@@ -27,17 +29,38 @@ export default function App() {
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
+  function handleEditItem(id) {
+    console.log(id);
+  }
+
+  function handleOpenForm() {
+    setShowForm((value) => !value);
+  }
+
+  function handleCloseForm() {
+    setShowForm((value) => !value);
+  }
+
   return (
     <div>
       <TodoList
         items={items}
         onToggleItem={handleToggleItem}
+        onEditItem={handleEditItem}
         onDeleteItem={handleDeleteItem}
       />
 
       <TodoItem />
 
-      <AddTodoForm onSetItems={handleAddItem} />
+      {showForm ? (
+        <AddTodoForm
+          showForm={showForm}
+          onSetItems={handleAddItem}
+          onCloseForm={handleCloseForm}
+        ></AddTodoForm>
+      ) : (
+        <Button onClick={handleOpenForm}>Add Item</Button>
+      )}
     </div>
   );
 

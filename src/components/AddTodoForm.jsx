@@ -3,15 +3,16 @@ import { useRef } from "react";
 import { useState } from "react";
 import Button from "./Button";
 
-export default function AddTodoForm({ onSetItems }) {
+export default function AddTodoForm({ onSetItems, onCloseForm, showForm }) {
   const [description, setDescription] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen) inputRef.current.focus();
-  });
+    if (showForm) {
+      inputRef.current.focus();
+    }
+  }, [showForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,11 +28,11 @@ export default function AddTodoForm({ onSetItems }) {
     };
 
     onSetItems(newItem);
-    setIsOpen(false);
+    onCloseForm();
     setDescription("");
   }
 
-  return isOpen ? (
+  return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="description">Description</label>
@@ -44,10 +45,8 @@ export default function AddTodoForm({ onSetItems }) {
           ref={inputRef}
         />
       </div>
-      <Button>Add</Button>
-      <Button onClick={() => setIsOpen(false)}>Cancel</Button>
+      <Button>Submit</Button>
+      <Button onClick={onCloseForm}>Cancel</Button>
     </form>
-  ) : (
-    <Button onClick={() => setIsOpen(true)}>Add Item</Button>
   );
 }
