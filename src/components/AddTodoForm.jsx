@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import Button from "./Button";
 
 export default function AddTodoForm({ onSetItems }) {
   const [description, setDescription] = useState("");
@@ -43,9 +44,10 @@ export default function AddTodoForm({ onSetItems }) {
           ref={inputRef}
         />
       </div>
-      <button>Add</button>
+      <Button>Add</Button>
+      <Button onClick={() => setIsOpen(false)}>Cancel</Button>
     </form>
   ) : (
-    <button onClick={() => setIsOpen(true)}>Add Item</button>
+    <Button onClick={() => setIsOpen(true)}>Add Item</Button>
   );
 }
